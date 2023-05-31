@@ -1,0 +1,118 @@
+<div class="form-container flex-column width-full">
+    <div class="flex-row">
+        <div class="width-100px p-top-5">Title</div>
+        <div class="flex-grow-1">
+            <input class="width-full" type="text" id="txttitle">
+        </div>
+    </div>
+    <div class="flex-row">
+        <div class="width-100px p-top-5">Venue</div>
+        <div class="flex-grow-1">
+            <input class="width-full" type="text" id="txtvenue">
+        </div>
+    </div>
+    <div class="flex-row">
+        <div class="width-100px p-top-5">Address</div>
+        <div class="flex-grow-1">
+            <input class="width-full" type="text" id="txtaddr1" placeholder="address 1">
+        </div>
+    </div>
+    <div class="flex-row">
+        <div class="width-100px"></div>
+        <div class="flex-grow-1">
+            <input class="width-full" type="text" id="txtaddr2" placeholder="address 2">
+        </div>
+    </div>
+    <div class="flex-row">
+        <div class="width-100px"></div>
+        <div class="flex-grow-3">
+            <input class="width-full" type="text" id="txtpostcode" placeholder="postcode">
+        </div>
+        <div class="flex-grow-3">
+            <input class="width-full" type="text" id="txttown" placeholder="town">
+        </div>
+        <div class="flex-grow-3">
+            <select class="width-full" name="cmbstate" id="cmbstate">
+                <option value="">--select state--</option>
+                <option value="JOHOR">JOHOR</option>
+                <option value="KEDAH">KEDAH</option>
+                <option value="KELANTAN">KELANTAN</option>
+                <option value="MELAKA">MELAKA</option>
+                <option value="NEGERI SEMBILAN">NEGERI SEMBILAN</option>
+                <option value="PAHANG">PAHANG</option>
+                <option value="PULAU PINANG">PULAU PINANG</option>
+                <option value="PERAK">PERAK</option>
+                <option value="PERLIS">PERLIS</option>
+                <option value="SELANGOR">SELANGOR</option>
+                <option value="TERENGGANU">TERENGGANU</option>
+                <option value="SABAH">SABAH</option>
+                <option value="SARAWAK">SARAWAK</option>
+                <option value="WP KUALA LUMPUR">WP KUALA LUMPUR</option>
+                <option value="WP LABUAN">WP LABUAN</option>
+                <option value="WP PUTRAJAYA">WP PUTRAJAYA</option>
+            </select>
+        </div>
+    </div>
+    <div class="flex-row">
+        <div class="width-100px p-top-5">Target</div>
+        <div class="flex-grow-1">
+            <input class="width-full" type="number" id="txttarget" placeholder="target number of visitors">
+        </div>
+    </div>
+    <div class="flex-row">
+        <div class="width-100px p-top-5">Date start</div>
+        <div class="flex-grow-1">
+            <input class="width-full" type="date" id="dtstart" placeholder="from">
+        </div>
+        <div class="width-100px p-top-5">Date ends</div>
+        <div class="flex-grow-1">
+            <input class="width-full" type="date" id="dtend" placeholder="to">
+        </div>
+    </div>
+
+    <div class="flex-row width-full bg-dark h-60 float-bottom">
+        <div id="btn-save" class="button-green float-right" style="padding-top:20px" >
+            <i class="fa-solid fa-floppy-disk"></i>&nbsp;Save
+        </div>
+    </div>
+</div>
+
+<script src="./assets/jquery/3.6.0/jquery-3.6.0.min.js"></script>
+<script>
+    var API = {
+            submit: {
+                registration: (q, fn) => {
+                    console.log(q);
+                    $.ajax({
+                        type: "POST",
+                        url: '/api/ev/register',
+                        data: q,
+                        success: function (res) {
+                            fn(res);
+                        },
+                        dataType: 'json'
+                    });
+                }
+            }
+        }
+</script>
+<script>
+    $('#btn-save').on('click', (e)=>{
+        var q = {
+            title: $('#txttitle').val(),
+            venue: $('#txtvenue').val(),
+            address1: $('#txtaddr1').val(),
+            address2: $('#txtaddr2').val(),
+            postcode: $('#txtpostcode').val(),
+            town: $('#txttown').val(),
+            state: $('#cmbstate').val(),
+            target_visitors: $('#txttarget').val(),
+            event_date_start: $('#dtstart').val(),
+            event_date_end: $('#dtend').val()
+        }
+
+        API.submit.registration(q, (r)=>{
+            window.location.href = "./list";
+        });
+    });
+</script>

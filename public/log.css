@@ -1,0 +1,63 @@
+.radios label {
+    cursor: pointer;
+    position: relative;
+  }
+  
+.radios label + label {
+    margin-left: 15px;
+  }
+  
+  input[type="radio"] {
+    opacity: 0; /* hidden but still tabable */
+    position: absolute;
+  }
+  
+  input[type="radio"] + span {
+    margin-top: 30px;
+    color: #474747;
+    border-radius: 5px;
+    padding: 12px;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    cursor: pointer;
+  }
+  
+  input[type="radio"]:checked + span {
+    color: #D9E7FD;
+    background-color: #4285F4;
+  }
+  
+  input[type="radio"]:focus + span {
+    color: #fff;
+  }
+  
+  /* ================ TOOLTIPS ================= */
+  
+  #radios label:hover::before {
+    content: attr(for);
+    font-family: Roboto, -apple-system, sans-serif;
+    text-transform: capitalize;
+    font-size: 11px;
+    position: absolute;
+    top: 170%;
+    left: 0;
+    right: 0;
+    opacity: 0.75;
+    background-color: #323232;
+    color: #fff;  
+    padding: 4px;
+    border-radius: 3px;
+    display: block;
+  }
+
+
+.bg{
+    background-color: #d5ec96;
+}
+
+.border-light{
+    border: 1px solid #c2c2c2;
+    height: 30px;
+    width: 120px;
+    padding-top: 20px;
+}
