@@ -105,9 +105,39 @@
         <script src="../assets/jquery/3.6.0/jquery-3.6.0.min.js"></script>
         <script src="../assets/fontawesome/js/d0267849d0.js" crossorigin="anonymous"></script>
         <script>
+              var API = {
+                      submit: {
+                          registration: (q, fn) => {
+                              console.log(q);
+                              $.ajax({
+                                  type: "POST",
+                                  url: '/api/log/sign',
+                                  data: q,
+                                  success: function (res) {
+                                      fn(res);
+                                  },
+                                  dataType: 'json'
+                              });
+                          }
+                      }
+                  }
+        </script>
+        <script>
             function save(){
-                $('input').val('');
-                $('input').prop('checked',false);
+              data = {
+                eventid: '',
+                nama: $('#txtnama').val(),
+                umur: $('input[name="age"]:checked').val(),
+                jantina: $('input[name="jantina"]:checked').val(),
+                pelawat: $('input[name="pelawat"]:checked').val()
+              }
+
+              API.submit(data, (d)=>{
+
+              })
+
+              $('input').val('');
+              $('input').prop('checked',false);
             }
         </script>
     </body>

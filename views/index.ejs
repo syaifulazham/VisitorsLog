@@ -2,8 +2,8 @@
     <header>
         <title>Visitors Log</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <link rel="stylesheet" type="text/css" href="./assets/fontawesome/css/solid.min.css" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="<%=page=='update.ejs'?'../':''%>style.css">
+        <link rel="stylesheet" type="text/css" href="<%=page=='update.ejs'?'../':'./'%>assets/fontawesome/css/solid.min.css" crossorigin="anonymous">
     </header>
 
     <body>
@@ -11,10 +11,13 @@
             <div class="flex-row width-full bg-dark h-60">
                 <div class="brand flex-row center">Event Logger</div>
                 
-                <a class="flex-row button center float-right right-border-light" href="./list">
+                <a class="flex-row button center float-right right-border-light" href="<%=page=='update.ejs'?'../':'./'%>qrscan">
+                    <i style="padding-top:10px" class="fa-solid fa-qrcode fa-2x"></i>
+                </a>
+                <a class="flex-row button center right-border-light" href="<%=page=='update.ejs'?'../':'./'%>list">
                     <i style="padding-top:10px" class="fa-solid fa-list fa-2x"></i>
                 </a>
-                <a class="flex-row button center" href="./register">
+                <a class="flex-row button center" href="<%=page=='update.ejs'?'../':'./'%>register">
                     <i style="padding-top:10px" class="fa-solid fa-plus fa-2x"></i>
                 </a>
             </div>
@@ -24,6 +27,6 @@
 
             </div>
         </div>
-        <script src="./assets/fontawesome/js/d0267849d0.js" crossorigin="anonymous"></script>
+        <script src="<%=page=='update.ejs'?'../':'./'%>assets/fontawesome/js/d0267849d0.js" crossorigin="anonymous"></script>
     </body>
 </html>

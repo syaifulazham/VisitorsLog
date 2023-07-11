@@ -1,5 +1,8 @@
-var express = require('express');
+const express = require('express');
 const session = require('express-session');
+const fs = require('fs');
+const { createCanvas, loadImage } = require('canvas');
+const jsQR = require('jsqr');
 
 const bodyParser = require('body-parser');
 
@@ -70,10 +73,46 @@ router.get('/list', (req,res)=>{
     });
 });
 
+router.get('/qrscan', (req,res)=>{
+    res.render('index.ejs', {title: 'Log Kehadiran QR-Code', data:[], page:'qrscan.ejs'});
+});
+
+router.post('/scan', (req, res) => {
+    const imageData = req.body.imageData; // Assuming you're sending the image data from the frontend
+    const canvas = createCanvas();
+    const ctx = canvas.getContext('2d');
+  
+    const img = new Image();
+    img.onload = () => {
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0, img.width, img.height);
+  
+      const imageData = ctx.getImageData(0, 0, img.width, img.height);
+      const code = jsQR(imageData.data, imageData.width, imageData.height);
+  
+      if (code) {
+        console.log('Scanned content:', code.data);
+        // Do something with the scanned content
+      } else {
+        console.error('No QR code found.');
+      }
+    };
+  
+    img.onerror = (err) => {
+      console.error(err);
+    };
+  
+    img.src = `data:image/png;base64,${imageData}`;
+    res.sendStatus(200);
+  });
+
 router.get('/byid/:id', (req,res)=>{
     const evid = req.params.id;
+    console.log('Event ID: ',evid)
     API.events.byid(evid, (result)=>{
-        res.render('index.ejs', {title: 'Log Pelawat', data:result, page:'byid.ejs'});
+        console.log('this is the data',result)
+        res.render('index.ejs', {title: 'Update Log Pelawat', data:result[0], page:'update.ejs'});
     });
 });
 
@@ -94,8 +133,8 @@ router.get('/log/:id', (req,res)=>{
 });
 
 router.post('/api/ev/register', actions.events.register);
-router.post('/api/ev/update', actions.events.register);
-router.post('/api/ev/list', actions.events.register);
+router.post('/api/ev/update', actions.events.update);
+router.post('/api/ev/list', actions.events.list);
 
 
 

@@ -92,6 +92,7 @@ let API = {
                 `;
 
                 con.query(sql, [id],(err, result)=>{
+                    console.log(result);
                     fn(result);
                 });
             }catch(err){
