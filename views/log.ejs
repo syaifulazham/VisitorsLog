@@ -1,144 +1,168 @@
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="../style.css">
-        <link rel="stylesheet" type="text/css" href="../log.css">
-        <link rel="stylesheet" type="text/css" href="../assets/fontawesome/css/solid.min.css" crossorigin="anonymous">
-    </head>
 
-    <body class="bg">
-        <div class="container center padding-10px" style="padding-bottom: 60px!important;">
-            <%data.forEach((d)=>{%>
-                <h1><%=d.title%></h1>
-                <h3><%=d.address1%>, <%=d.address2%></</h3>
-                <h3><%=d.postcode%> <%=d.town%>, <%=d.state%></h3>
-                <hr>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="../style.css">
+  <link rel="stylesheet" type="text/css" href="../log.css">
+  <link rel="stylesheet" type="text/css" href="../assets/fontawesome/css/solid.min.css" crossorigin="anonymous">
+</head>
 
-                <div class="flex-column width-full center">
-                    <h4>Nama</h4>
-                    <div class="flex-row">
-                        <input type="text" placeholder="nama pelawat">
-                    </div>
-                </div>
-                
-                <hr>
-                <div class="flex-column width-full center">
-                    <h4>Jantina</h4>
-                    <div id="radios0">
-                      <label for="age1">
-                        <input type="radio" name="age" id="age1" value="< 12 Thn"/>
-                        <span>< 12 Thn</span>
-                      </label>                
-                      <label for="age2" class="material-icons">
-                        <input type="radio" name="age" id="age2" value="13-15Thn" />
-                        <span>13-15Thn</span>
-                      </label>              
-                      <label for="age3" class="material-icons">
-                        <input type="radio" name="age" id="age3" value="16-17Thn" />
-                        <span>16-17Thn</span>
-                      </label>              
-                      <label for="age4" class="material-icons">
-                        <input type="radio" name="age" id="age4" value="18-25Thn" />
-                        <span>18-25</span>
-                      </label>             
-                      <label for="age5" class="material-icons">
-                        <input type="radio" name="age" id="age5" value="26-40Thn" />
-                        <span>26-40</span>
-                      </label>     
-                      <label for="age6" class="material-icons">
-                        <input type="radio" name="age" id="age6" value="> 41Thn" />
-                        <span>> 41Thn</span>
-                      </label>
-                </div>
-                
-                <hr>
-                <div class="flex-column width-full center">
-                    <h4>Jantina</h4>
-                    <div id="radios1">
-                      <label for="lelaki">
-                        <input type="radio" name="jantina" id="lelaki" value="Lelaki"/>
-                        <span>Lelaki</span>
-                      </label>                
-                      <label for="perempuan" class="material-icons">
-                        <input type="radio" name="jantina" id="perempuan" value="Perempuan" />
-                        <span>Perempuan</span>
-                      </label>
-                </div>
-                <div>&nbsp;</div>
-                <hr>
-                <div class="flex-column width-full center">
-                    <h4>Anda adalah...</h4>
-                    <div id="radios2">
-                      <label for="rendah">
-                        <input type="radio" name="pelawat" id="rendah" value="Pelajar Sekolah Rendah"/>
-                        <span>Pelajar Sekolah Rendah</span>
-                      </label>                
-                      <label for="menengah" class="material-icons">
-                        <input type="radio" name="pelawat" id="menengah" value="Pelajar Sekolah Menengah" />
-                        <span>Pelajar Sekolah Menengah</span>
-                      </label>               
-                      <label for="ibubapa" class="material-icons">
-                        <input type="radio" name="pelawat" id="ibubapa" value="Ibu Bapa" />
-                        <span>Ibu Bapa</span>
-                      </label>              
-                      <label for="pelajaript" class="material-icons">
-                        <input type="radio" name="pelawat" id="pelajaript" value="Pelajar IPT" />
-                        <span>Pelajar IPT</span>
-                      </label>            
-                      <label for="tempatan" class="material-icons">
-                        <input type="radio" name="pelawat" id="tempatan" value="Penduduk Tempatan" />
-                        <span>Penduduk Tempatan</span>
-                      </label>           
-                      <label for="lain" class="material-icons">
-                        <input type="radio" name="pelawat" id="lain" value="Lain-lain" />
-                        <span>Lain-lain</span>
-                      </label>
-                </div>
-            <%});%>
+<body class="bg">
+  <div class="log-container center padding-10px" style="padding-bottom: 60px!important;">
+    <%data.forEach((d)=>{%>
+    <h1><%=d.title%></h1>
+    <h3><%=d.address1%>, <%=d.address2%></< /h3>
+      <h3><%=d.postcode%> <%=d.town%>, <%=d.state%></h3>
+      <hr>
 
-            <div class="flex-row width-full bg-dark h-60 float-bottom center">
-                <div id="btn-save" class="button-green border-light" onclick="save()">
-                    <i class="fa-solid fa-floppy-disk"></i>&nbsp;Save
-                </div>
-            </div>
+      <div class="flex-column width-full center">
+        <h4>Pelawat</h4>
+        <div class="flex-row width-full center">
+          <input type="text" id="txtnama" placeholder="nama pelawat">
         </div>
+        <div class="flex-row width-full center">
+          <input type="text" id="txtemail" placeholder="email pelawat">
+        </div>
+        <div class="flex-row width-full center">
+          <input type="text" id="txtnotel" placeholder="no telefon pelawat">
+        </div>
+        <div class="flex-row width-full center">
+          <input type="text" id="txtorganisasi" placeholder="organisasi/ sekolah dsb.">
+        </div>
+        <hr>
+      </div>
+
+      <div class="radio-questions width-full flex-row center">
+
+        <div id="radios0" class="radio-questions-grp text-center">
+          <h4>Kumpulan Umur</h4>
+          <label for="age1">
+            <input type="radio" name="age" id="age1" value="< 12 Thn" />
+            <span>< 12 Thn</span>
+          </label>
+          <label for="age2" class="material-icons">
+            <input type="radio" name="age" id="age2" value="13-15Thn" />
+            <span>13-15Thn</span>
+          </label>
+          <label for="age3" class="material-icons">
+            <input type="radio" name="age" id="age3" value="16-17Thn" />
+            <span>16-17Thn</span>
+          </label>
+          <label for="age4" class="material-icons">
+            <input type="radio" name="age" id="age4" value="18-25Thn" />
+            <span>18-25</span>
+          </label>
+          <label for="age5" class="material-icons">
+            <input type="radio" name="age" id="age5" value="26-40Thn" />
+            <span>26-40</span>
+          </label>
+          <label for="age6" class="material-icons">
+            <input type="radio" name="age" id="age6" value="> 41Thn" />
+            <span>> 41Thn</span>
+          </label>
+          
+        </div>
+
+
+        <div id="radios1" class="radio-questions-grp text-center">
+          <h4>Jantina</h4>
+          <label for="lelaki">
+            <input type="radio" name="jantina" id="lelaki" value="Lelaki" />
+            <span>Lelaki</span>
+          </label>
+          <label for="perempuan" class="material-icons">
+            <input type="radio" name="jantina" id="perempuan" value="Perempuan" />
+            <span>Perempuan</span>
+          </label>
+          
+        </div>
+
+
+
+        <div id="radios2" class="text-center radio-questions-grp ">
+          <h4>Anda adalah...</h4>
+          <label for="guru">
+            <input type="radio" name="pelawat" id="guru" value="Guru" />
+            <span>Guru</span>
+          </label>
+          <label for="rendah">
+            <input type="radio" name="pelawat" id="rendah" value="Pelajar Sekolah Rendah" />
+            <span>Pelajar Sekolah Rendah</span>
+          </label>
+          <label for="menengah" class="material-icons">
+            <input type="radio" name="pelawat" id="menengah" value="Pelajar Sekolah Menengah" />
+            <span>Pelajar Sekolah Menengah</span>
+          </label>
+          <label for="ibubapa" class="material-icons">
+            <input type="radio" name="pelawat" id="ibubapa" value="Ibu Bapa" />
+            <span>Ibu Bapa</span>
+          </label>
+          <label for="pelajaript" class="material-icons">
+            <input type="radio" name="pelawat" id="pelajaript" value="Pelajar IPT" />
+            <span>Pelajar IPT</span>
+          </label>
+          <label for="tempatan" class="material-icons">
+            <input type="radio" name="pelawat" id="tempatan" value="Penduduk Tempatan" />
+            <span>Penduduk Tempatan</span>
+          </label>
+          <label for="lain" class="material-icons">
+            <input type="radio" name="pelawat" id="lain" value="Lain-lain" />
+            <span>Lain-lain</span>
+          </label>
+
+          
+        </div>
+
+
+        <%});%>
+
+        <div class="flex-row width-full bg-dark h-60 float-bottom center">
+          <div id="btn-save" class="button-green border-light" onclick="save()">
+            <i class="fa-solid fa-floppy-disk"></i>&nbsp;Save
+          </div>
+        </div>
+
         <script src="../assets/jquery/3.6.0/jquery-3.6.0.min.js"></script>
         <script src="../assets/fontawesome/js/d0267849d0.js" crossorigin="anonymous"></script>
         <script>
-              var API = {
-                      submit: {
-                          registration: (q, fn) => {
-                              console.log(q);
-                              $.ajax({
-                                  type: "POST",
-                                  url: '/api/log/sign',
-                                  data: q,
-                                  success: function (res) {
-                                      fn(res);
-                                  },
-                                  dataType: 'json'
-                              });
-                          }
-                      }
-                  }
+          var API = {
+            submit: {
+              registration: (q, fn) => {
+                console.log(q);
+                $.ajax({
+                  type: "POST",
+                  url: '/api/log/sign',
+                  data: q,
+                  success: function(res) {
+                    fn(res);
+                  },
+                  dataType: 'json'
+                });
+              }
+            }
+          }
         </script>
         <script>
-            function save(){
-              data = {
-                eventid: '',
-                nama: $('#txtnama').val(),
-                umur: $('input[name="age"]:checked').val(),
-                jantina: $('input[name="jantina"]:checked').val(),
-                pelawat: $('input[name="pelawat"]:checked').val()
-              }
-
-              API.submit(data, (d)=>{
-
-              })
-
-              $('input').val('');
-              $('input').prop('checked',false);
+          function save() {
+            data = {
+              eventid: '',
+              nama: $('#txtnama').val(),
+              email: $('#txtemail').val(),
+              notel: $('#txtemail').val(),
+              organisasi: $('#txtorganisasi').val(),
+              umur: $('input[name="age"]:checked').val(),
+              jantina: $('input[name="jantina"]:checked').val(),
+              pelawat: $('input[name="pelawat"]:checked').val()
             }
+
+            API.submit(data, (d) => {
+
+            })
+
+            $('input').val('');
+            $('input').prop('checked', false);
+          }
         </script>
-    </body>
+</body>
+
 </html>

@@ -10,7 +10,12 @@ const API = require('./mysql_crud');
 
 var router = express.Router();
 
-router.use(bodyParser.urlencoded({ extended: true }));
+
+router.use(bodyParser.json({ limit: '10mb' }));
+router.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
+
+
+//router.use(bodyParser.urlencoded({ extended: true }));
 // parse application/json
 router.use(bodyParser.json());
 
@@ -78,33 +83,31 @@ router.get('/qrscan', (req,res)=>{
 });
 
 router.post('/scan', (req, res) => {
-    const imageData = req.body.imageData; // Assuming you're sending the image data from the frontend
-    const canvas = createCanvas();
-    const ctx = canvas.getContext('2d');
+    const imageData = req.body.imageData;
+    const base64Data = imageData.replace(/^data:image\/png;base64,/, '');
   
-    const img = new Image();
-    img.onload = () => {
-      canvas.width = img.width;
-      canvas.height = img.height;
-      ctx.drawImage(img, 0, 0, img.width, img.height);
+    const buffer = Buffer.from(base64Data, 'base64');
+    loadImage(buffer)
+      .then((image) => {
+        const canvas = createCanvas(image.width, image.height);
+        const context = canvas.getContext('2d');
+        context.drawImage(image, 0, 0);
+        const imageData = context.getImageData(0, 0, image.width, image.height);
+        const code = jsQR(imageData.data, imageData.width, imageData.height);
   
-      const imageData = ctx.getImageData(0, 0, img.width, img.height);
-      const code = jsQR(imageData.data, imageData.width, imageData.height);
-  
-      if (code) {
-        console.log('Scanned content:', code.data);
-        // Do something with the scanned content
-      } else {
-        console.error('No QR code found.');
-      }
-    };
-  
-    img.onerror = (err) => {
-      console.error(err);
-    };
-  
-    img.src = `data:image/png;base64,${imageData}`;
-    res.sendStatus(200);
+        if (code) {
+          console.log('Scanned content:', code.data);
+          // Do something with the scanned content
+          res.sendStatus(200);
+        } else {
+          console.error('No QR code found.');
+          res.sendStatus(400);
+        }
+      })
+      .catch((error) => {
+        console.error('Error loading image:', error);
+        res.sendStatus(500);
+      });
   });
 
 router.get('/byid/:id', (req,res)=>{
