@@ -48,6 +48,7 @@ let API = {
                 `;
 
                 con.query(sql, data, (err, result)=>{
+                    con.end();
                     fn({
                         status: true,
                         msg: "data berjaya disimpan"
@@ -75,6 +76,7 @@ let API = {
                 `;
 
                 con.query(sql, (err, result)=>{
+                    con.end();
                     fn(result);
                 });
             }catch(err){
@@ -88,11 +90,15 @@ let API = {
             try{
                 var con = mysql.createConnection(auth.auth()[__DATA__SCHEMA__]);
                 var sql = `
-                SELECT * FROM events_register where id = ?;
+                SELECT a.*,
+                DATE_FORMAT(event_date_start, "%Y-%m-%d") dt_start,
+                DATE_FORMAT(event_date_end, "%Y-%m-%d") dt_end  
+                FROM events_register a where id = ?;
                 `;
 
                 con.query(sql, [id],(err, result)=>{
                     console.log(result);
+                    con.end();
                     fn(result);
                 });
             }catch(err){
@@ -110,7 +116,47 @@ let API = {
                 `;
 
                 con.query(sql, [id],(err, result)=>{
+                    con.end();
                     fn(result);
+                });
+            }catch(err){
+                fn({
+                    status: false,
+                    msg: err
+                });
+            }
+        },
+
+        sign: (p, fn) => {
+            console.log('xxxxxxx====>>>>',p);
+            var data = [
+                p.eventid,
+                p.nama,
+                p.email,
+                p.notel,
+                p.organisasi,
+                p.negeri,
+                p.umur,
+                p.jantina,
+                p.pelawat,
+                p.pengiring,
+                p.bilpelajar,
+                p.hadir
+            ];
+
+            try{
+                var con = mysql.createConnection(auth.auth()[__DATA__SCHEMA__]);
+                var sql = `
+                insert into events_visitors(eventid,nama,email,notel,organisasi,negeri,umur,jantina,pelawat,pengiring,bilpelajar,hadir)
+                values(?,?,?,?,?,?,?,?,?,?,?,?)
+                `;
+
+                con.query(sql, data,(err, result)=>{
+                    con.end();
+                    fn({
+                        status: true,
+                        msg: result
+                    });
                 });
             }catch(err){
                 fn({

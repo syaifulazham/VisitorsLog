@@ -63,11 +63,11 @@
     <div class="flex-row">
         <div class="width-100px p-top-5">Date start</div>
         <div class="flex-grow-1">
-            <input class="width-full" type="date" id="dtstart" placeholder="from" value="<%=data.event_date_start%>">
+            <input class="width-full" type="date" id="dtstart" placeholder="from" value="<%=data.dt_start%>">
         </div>
         <div class="width-100px p-top-5">Date ends</div>
         <div class="flex-grow-1">
-            <input class="width-full" type="date" id="dtend" placeholder="to" value="<%=data.event_date_end%>">
+            <input class="width-full" type="date" id="dtend" placeholder="to" value="<%=data.dt_end%>">
         </div>
     </div>
 
@@ -86,7 +86,7 @@
                     console.log(q);
                     $.ajax({
                         type: "POST",
-                        url: '/api/ev/register',
+                        url: '/api/ev/update',
                         data: q,
                         success: function (res) {
                             fn(res);

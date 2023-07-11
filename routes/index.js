@@ -61,6 +61,12 @@ var actions = {
                 res.send(result);
             });
         },
+        sign:(req, res)=>{
+            console.log('req borang===@@@',req.body.borang)
+            API.events.sign(req.body.borang, result=>{
+                res.send(result);
+            })
+        },
     },
     
 }
@@ -138,6 +144,7 @@ router.get('/log/:id', (req,res)=>{
 router.post('/api/ev/register', actions.events.register);
 router.post('/api/ev/update', actions.events.update);
 router.post('/api/ev/list', actions.events.list);
+router.post('/api/log/sign', actions.events.sign);
 
 
 
