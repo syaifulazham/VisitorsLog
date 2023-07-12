@@ -25,6 +25,18 @@ body {
     margin: 0;
 }
 
+
+
+#video-container > video{
+    border: 2px solid #474747;
+    border-radius: 25px;  
+  }
+  
+  #scan-results{
+    font-size: 250%;
+    font-weight: 400;
+  }
+
 .brand{
     font-family: 'Nova Mono', monospace;
     padding-left: 30px;

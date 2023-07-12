@@ -31,7 +31,19 @@ let API = {
         update: (d, fn) =>{
             try{
                 var con = mysql.createConnection(auth.auth()[__DATA__SCHEMA__]);
-                var data = [d.title,d.venue,d.address1,d.address2,d.postcode,d.town,d.state,d.target_visitors,d.event_date_start,d.event_date_end,d.eventid]
+                var data = [
+                    d.title,
+                    d.venue,
+                    d.address1,
+                    d.address2,
+                    d.postcode,
+                    d.town,
+                    d.state,
+                    d.target_visitors,
+                    d.event_date_start,
+                    d.event_date_end,
+                    d.id
+                ];
                 var sql = `
                 UPDATE events_register
                 SET title = ?,
@@ -48,6 +60,8 @@ let API = {
                 `;
 
                 con.query(sql, data, (err, result)=>{
+                    console.log(result);
+                    if(err) console.log(err);
                     con.end();
                     fn({
                         status: true,
@@ -55,6 +69,7 @@ let API = {
                     });
                 });
             }catch(err){
+                console.log(err);
                 fn({
                     status: false,
                     msg: err
@@ -112,7 +127,27 @@ let API = {
             try{
                 var con = mysql.createConnection(auth.auth()[__DATA__SCHEMA__]);
                 var sql = `
-                SELECT * FROM events_register where eventid = ?;
+                SELECT a.*,
+                DATE_FORMAT(event_date_start, "%d-%m-%Y") dt_start,
+                DATE_FORMAT(event_date_end, "%d-%m-%Y") dt_end FROM events_register a where eventid = ?;
+                `;
+
+                con.query(sql, [id],(err, result)=>{
+                    con.end();
+                    fn(result);
+                });
+            }catch(err){
+                fn({
+                    status: false,
+                    msg: err
+                });
+            }
+        },
+        preregistered: (id, fn) => {
+            try{
+                var con = mysql.createConnection(auth.auth()[__DATA__SCHEMA__]);
+                var sql = `
+                SELECT * FROM events_visitors where preregistrationid = ?;
                 `;
 
                 con.query(sql, [id],(err, result)=>{
@@ -164,7 +199,70 @@ let API = {
                     msg: err
                 });
             }
-        }
+        },
+
+        presign: (p, fn) => {
+            //console.log('xxxxxxx====>>>>',p);
+            var data = [
+                p.eventid,
+                p.nama,
+                p.email,
+                p.notel,
+                p.organisasi,
+                p.negeri,
+                p.umur,
+                p.jantina,
+                p.pelawat,
+                p.pengiring,
+                p.bilpelajar,
+                p.qrstring,
+                0
+            ];
+
+            try{
+                var con = mysql.createConnection(auth.auth()[__DATA__SCHEMA__]);
+                var sql = `
+                insert into events_visitors(eventid,nama,email,notel,organisasi,negeri,umur,jantina,pelawat,pengiring,bilpelajar,preregistrationid,hadir)
+                values(?,?,?,?,?,?,?,?,?,?,?,?,?)
+                `;
+
+                con.query(sql, data,(err, result)=>{
+                    con.end();
+                    fn({
+                        status: true,
+                        msg: result
+                    });
+                });
+            }catch(err){
+                fn({
+                    status: false,
+                    msg: err
+                });
+            }
+        },
+
+        update_presign: (id, fn) => {
+            
+            try{
+                var con = mysql.createConnection(auth.auth()[__DATA__SCHEMA__]);
+                var sql = `
+                update events_visitors set hadir = 1 where preregistrationid = ?
+                `;
+
+                con.query(sql, id,(err, result)=>{
+                    con.end();
+                    fn({
+                        status: true,
+                        msg: result
+                    });
+                });
+            }catch(err){
+                fn({
+                    status: false,
+                    msg: err
+                });
+            }
+        },
     }
 }
 

@@ -63,11 +63,11 @@
     <div class="flex-row">
         <div class="width-100px p-top-5">Date start</div>
         <div class="flex-grow-1">
-            <input class="width-full" type="date" id="dtstart" placeholder="from" value="<%=data.dt_start%>">
+            <input class="width-full" type="date" id="dtstart" format="dd-mm-yyyy" value="<%=data.dt_start%>">
         </div>
         <div class="width-100px p-top-5">Date ends</div>
         <div class="flex-grow-1">
-            <input class="width-full" type="date" id="dtend" placeholder="to" value="<%=data.dt_end%>">
+            <input class="width-full" type="date" id="dtend" placeholder="dd-mm-yyyy" value="<%=data.dt_end%>">
         </div>
     </div>
 
@@ -99,6 +99,10 @@
 </script>
 <script>
     $('#btn-save').on('click', (e)=>{
+        var url = window.location.href;
+            var eid_ = url.split('/');
+            var eid = eid_[eid_.length-1];
+
         var q = {
             title: $('#txttitle').val(),
             venue: $('#txtvenue').val(),
@@ -109,11 +113,12 @@
             state: $('#cmbstate').val(),
             target_visitors: $('#txttarget').val(),
             event_date_start: $('#dtstart').val(),
-            event_date_end: $('#dtend').val()
+            event_date_end: $('#dtend').val(),
+            id: eid
         }
 
         API.submit.registration(q, (r)=>{
-            window.location.href = "./list";
+            window.location.href = "../list";
         });
     });
 </script>

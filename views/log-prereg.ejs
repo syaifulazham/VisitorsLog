@@ -1,0 +1,249 @@
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="../style.css">
+  <link rel="stylesheet" type="text/css" href="../log.css">
+  <link rel="stylesheet" type="text/css" href="../assets/fontawesome/css/solid.min.css" crossorigin="anonymous">
+</head>
+
+<body class="bg">
+  <div class="log-container center padding-10px" style="padding-bottom: 60px!important;">
+    <%data.forEach((d)=>{%>
+        <h1><%=d.title%></h1>
+        <h3><%=d.address1%>, <%=d.address2%></h3>
+        <h5><%=d.postcode%> <%=d.town%>, <%=d.state%></h5>
+        <hr>
+
+      <div class="radio-questions width-full flex-row center">
+        <div class="radio-questions-grp flex-column text-center">
+          <h4>Pelawat</h4>
+          <div class="flex-row width-full center">
+            <input type="text" id="txtnama" placeholder="nama pelawat">
+          </div>
+          <div class="flex-row width-full center">
+            <input type="text" id="txtemail" placeholder="email pelawat">
+          </div>
+          <div class="flex-row width-full center">
+            <input type="text" id="txtnotel" placeholder="no telefon pelawat">
+          </div>
+          <div class="flex-row width-full center">
+            <input type="text" id="txtorganisasi" placeholder="organisasi/ sekolah dsb.">
+          </div>
+        </div>
+
+        <!--=======================================================-->
+        <%
+          var negeri = [
+            {id: 1, nama: 'JOHOR'},
+            {id: 2, nama: 'KEDAH'},
+            {id: 3, nama: 'KELANTAN'},
+            {id: 4, nama: 'MELAKA'},
+            {id: 5, nama: 'NEGERI SEMBILAN'},
+            {id: 6, nama: 'PAHANG'},
+            {id: 7, nama: 'PULAU PINANG'},
+            {id: 8, nama: 'PERAK'},
+            {id: 9, nama: 'PERLIS'},
+            {id: 10, nama: 'SELANGOR'},
+            {id: 11, nama: 'TEENGGANU'},
+            {id: 12, nama: 'SABAH'},
+            {id: 13, nama: 'SARAWAK'},
+            {id: 14, nama: 'WP KUALA LUMPUR'},
+            {id: 15, nama: 'WP LABUAN'},
+            {id: 16, nama: 'WP PUTRAJAYA'},
+          ];
+        
+        %>
+        <div id="radios4" class="text-center radio-questions-grp ">
+        <h4>Negeri</h4>
+        <%negeri.forEach(d=>{%>
+          <label for="n<%=d.id%>">
+            <input type="radio" name="negeri" id="n<%=d.id%>" value="<%=d.nama%>" />
+            <span><%=d.nama%></span>
+          </label>
+        <%})%>
+      </div>
+
+
+        <div id="radios2" class="text-center radio-questions-grp ">
+          <h4>Anda adalah...</h4>
+
+          <label for="pengiring">
+            <input type="radio" name="pelawat" id="pengiring" value="Guru Pengiring" />
+            <span>Guru Pengiring</span>
+          </label>
+          <label for="guru">
+            <input type="radio" name="pelawat" id="guru" value="Guru" />
+            <span>Guru</span>
+          </label>
+          <label for="rendah">
+            <input type="radio" name="pelawat" id="rendah" value="Pelajar Sekolah Rendah" />
+            <span>Pelajar Sekolah Rendah</span>
+          </label>
+          <label for="menengah" class="material-icons">
+            <input type="radio" name="pelawat" id="menengah" value="Pelajar Sekolah Menengah" />
+            <span>Pelajar Sekolah Menengah</span>
+          </label>
+          <label for="ibubapa" class="material-icons">
+            <input type="radio" name="pelawat" id="ibubapa" value="Ibu Bapa" />
+            <span>Ibu Bapa</span>
+          </label>
+          <label for="pelajaript" class="material-icons">
+            <input type="radio" name="pelawat" id="pelajaript" value="Pelajar IPT" />
+            <span>Pelajar IPT</span>
+          </label>
+          <label for="tempatan" class="material-icons">
+            <input type="radio" name="pelawat" id="tempatan" value="Penduduk Tempatan" />
+            <span>Penduduk Tempatan</span>
+          </label>
+          <label for="lain" class="material-icons">
+            <input type="radio" name="pelawat" id="lain" value="Lain-lain" />
+            <span>Lain-lain</span>
+          </label>
+
+          
+          <div id="ispengiring" class="radio-questions-sub-grp text-center hide">
+            <h4>Kumpulan Pelajar</h4>
+            <label for="sekrendah" class="material-icons">
+              <input type="radio" name="kump-pelajar" id="sekrendah" value="Sekolah Rendah" />
+              <span>Sekolah Rendah</span>
+            </label>
+            <label for="sekmenengah" class="material-icons">
+              <input type="radio" name="kump-pelajar" id="sekmenengah" value="Sekolah Menengah" />
+              <span>Sekolah Menengah</span>
+            </label>
+
+
+            <h4>Bilangan Pelajar</h4>
+            <div class="flex-row width-full center">
+              <input type="number" id="txtbilpelajar" placeholder="bilangan pelajar" value="0">
+            </div>
+          </div>
+        </div>
+        
+      </div>
+
+      <div class="radio-questions width-full flex-row center">
+
+        <div id="radios0" class="radio-questions-grp text-center">
+          <h4>Kumpulan Umur</h4>
+          <label for="age1">
+            <input type="radio" name="age" id="age1" value="< 12 Thn" />
+            <span>< 12 Thn</span>
+          </label>
+          <label for="age2" class="material-icons">
+            <input type="radio" name="age" id="age2" value="13-15Thn" />
+            <span>13-15Thn</span>
+          </label>
+          <label for="age3" class="material-icons">
+            <input type="radio" name="age" id="age3" value="16-17Thn" />
+            <span>16-17Thn</span>
+          </label>
+          <label for="age4" class="material-icons">
+            <input type="radio" name="age" id="age4" value="18-25Thn" />
+            <span>18-25</span>
+          </label>
+          <label for="age5" class="material-icons">
+            <input type="radio" name="age" id="age5" value="26-40Thn" />
+            <span>26-40</span>
+          </label>
+          <label for="age6" class="material-icons">
+            <input type="radio" name="age" id="age6" value="> 41Thn" />
+            <span>> 41Thn</span>
+          </label>
+          
+        </div>
+
+
+        <div id="radios1" class="radio-questions-grp text-center">
+          <h4>Jantina</h4>
+          <label for="lelaki">
+            <input type="radio" name="jantina" id="lelaki" value="Lelaki" />
+            <span>Lelaki</span>
+          </label>
+          <label for="perempuan" class="material-icons">
+            <input type="radio" name="jantina" id="perempuan" value="Perempuan" />
+            <span>Perempuan</span>
+          </label>
+          
+        </div>
+
+
+
+
+
+    <%});%>
+
+        <div class="flex-row width-full bg-dark h-60 float-bottom center">
+          <div id="btn-save" class="button-green border-light" onclick="save()">
+            <i class="fa-solid fa-floppy-disk"></i>&nbsp;Save
+          </div>
+        </div>
+
+        <script src="../assets/jquery/3.6.0/jquery-3.6.0.min.js"></script>
+        <script src="../assets/fontawesome/js/d0267849d0.js" crossorigin="anonymous"></script>
+        <script>
+          var API = {
+            submit: {
+              registration: (q, fn) => {
+                $.ajax({
+                  type: "POST",
+                  url: '/api/log/presign',
+                  data: {borang:q},
+                  success: function(res) {
+                    fn(res);
+                  },
+                  dataType: 'json'
+                });
+              }
+            }
+          }
+        </script>
+        <script>
+
+          $('input[name="pelawat"]').on('click',()=>{
+            if($('input[name="pelawat"]:checked').val()==='Guru Pengiring'){
+              $('#ispengiring').addClass('scale-up-ver-top').removeClass('hide');
+            }else{
+              $('#ispengiring').removeClass('scale-up-ver-top').addClass('hide');
+            }
+          })
+
+          function save() {
+            var url = window.location.href;
+            var eid_ = url.split('/');
+            var eid = eid_[eid_.length-1];
+            data = {
+              eventid: eid,
+              nama: $('#txtnama').val(),
+              email: $('#txtemail').val(),
+              notel: $('#txtnotel').val(),
+              organisasi: $('#txtorganisasi').val(),
+              negeri: $('input[name="negeri"]:checked').val(),
+              umur: $('input[name="age"]:checked').val(),
+              jantina: $('input[name="jantina"]:checked').val(),
+              pelawat: $('input[name="pelawat"]:checked').val(),
+              pengiring: $('input[name="kump-pelajar"]:checked').val(),
+              bilpelajar: $('#txthadir').val(),
+              hadir: 1,
+              title: "<%=data[0].title%>",
+              venue: "<%=data[0].venue%>",
+              alamat: "<%=data[0].address1+', ' + data[0].address1 + ', ' + data[0].postcode + ' ' + data[0].town + ', ' + data[0].state%>",
+              tarikh: "<%=(data[0].dt_start===data[0].dt_end)?data[0].dt_start:(data[0].dt_start + ' - ' + data[0].dt_end)%>"
+            }
+
+            console.log(data);
+
+            API.submit.registration(data, (d) => {
+              console.log(data);
+            })
+
+            $('input[type="text"]').val('');
+            $('input[type="number"]').val(0);
+            $('input').prop('checked', false);
+            $('#ispengiring').addClass('hide');
+          }
+        </script>
+</body>
+
+</html>
