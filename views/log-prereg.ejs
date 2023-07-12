@@ -2,7 +2,7 @@
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="../style.css">
+  <link rel="stylesheet" type="text/css" href="../style.css?v=1.0.3">
   <link rel="stylesheet" type="text/css" href="../log.css">
   <link rel="stylesheet" type="text/css" href="../assets/fontawesome/css/solid.min.css" crossorigin="anonymous">
 </head>
@@ -10,9 +10,9 @@
 <body class="bg">
   <div class="log-container center padding-10px" style="padding-bottom: 60px!important;">
     <%data.forEach((d)=>{%>
-        <h1><%=d.title%></h1>
-        <h3><%=d.address1%>, <%=d.address2%></h3>
-        <h5><%=d.postcode%> <%=d.town%>, <%=d.state%></h5>
+        <h1 class="text-center"><%=d.title%></h1>
+        <h3 class="text-center"><%=d.address1%>, <%=d.address2%>, <%=d.postcode%> <%=d.town%>, <%=d.state%></h3>
+        <h3></h3>
         <hr>
 
       <div class="radio-questions width-full flex-row center">
@@ -181,6 +181,20 @@
           </div>
         </div>
 
+
+    
+    <div class="idlePopUp center hide">
+        <div class="popUpPanel center">
+            <span class="spinner">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-3x"></i>
+            </span>
+            
+            <span id="msg" class="msg-saved text-center hide"></span>
+            <br>
+            <div class="msg-saved button hide" id="closePopup">Selesai</div>
+        </div>
+    </div>
+
         <script src="../assets/jquery/3.6.0/jquery-3.6.0.min.js"></script>
         <script src="../assets/fontawesome/js/d0267849d0.js" crossorigin="anonymous"></script>
         <script>
@@ -194,13 +208,30 @@
                   success: function(res) {
                     fn(res);
                   },
-                  dataType: 'json'
+                  dataType: 'json',
+                  complete: (jqXHR, textStatus)=>{
+                    console.log(textStatus);
+                  }
                 });
+
+                setTimeout(()=>{
+                    $('.spinner').addClass('hide');
+                    $('.msg-saved').removeClass('hide');
+                    $('#msg').html("<span>Terimakasih kerana berdaftar dengan kami</span> <br><span>QR-Code telah dihantar ke email anda</span>" )
+                }, 3000);
               }
+
+              
             }
           }
         </script>
         <script>
+
+        $('#closePopup').on('click',()=>{
+            $('.idlePopUp').toggleClass('hide');
+            $('.msg-saved').toggleClass('hide');
+            $('.spinner').toggleClass('hide');
+        })
 
           $('input[name="pelawat"]').on('click',()=>{
             if($('input[name="pelawat"]:checked').val()==='Guru Pengiring'){
@@ -235,8 +266,9 @@
 
             console.log(data);
 
+            $('.idlePopUp').removeClass('hide');
             API.submit.registration(data, (d) => {
-              console.log(data);
+              $('$msg').html(d);
             })
 
             $('input[type="text"]').val('');

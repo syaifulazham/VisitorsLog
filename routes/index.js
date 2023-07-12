@@ -167,7 +167,15 @@ var EMAIL = {
                     res.status(500).send('Error sending email');
                 } else {
                     console.log('Email sent:', info.response);
-                    res.send('Email sent successfully');
+                    res.send(`
+                    <strong>QR-Code telah di hantar ke ${borang.email}</strong>
+                    <span>Anda menerima email ini kerana anda telah berdaftar pra-pendaftaran untuk mengkadiri</span><br />
+                            <strong>${borang.title}</strong><br/>
+                            <span>Alamat: </span><strong>${borang.title}, ${borang.alamat}</strong><br/>
+                            <span>Tarikh: </span><strong>${borang.tarikh}</strong><br/>
+                            <br/><br/>
+                            <span>**Sila gunakan QR-CODE yang disertakan untuk pendaftaran dilokasi</span>
+                    `);
                 }
             });
 
