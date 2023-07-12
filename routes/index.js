@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
 
 const qrcode = require('qrcode');
 const nodemailer = require('nodemailer');
@@ -18,6 +19,13 @@ const auth = require('./auth');
 var router = express.Router();
 
 
+router.use((req, res, next) => {
+    res.setHeader('Cache-Control', 'no-store');
+    next();
+  });
+
+//set cookies
+router.use(cookieParser());
 router.use(bodyParser.json({ limit: '10mb' }));
 router.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
@@ -83,6 +91,28 @@ var actions = {
         },
 
     },
+
+    user:{
+        login: (req, res) => {
+            try{
+                uid = req.body.uid;
+                pwd = req.body.pwd;
+                if(uid === 'logAdmin' && pwd === '3v3NtsAdmin'){
+                    res.cookie('eventLogID', {user:{
+                        user: uid,
+                        authorized: true
+                    }});
+                    console.log('Will be rendered to index===>')
+                    res.send({authorized:true});
+                }else{
+                    res.send(user);
+                }
+              }catch(err){
+                console.log(err);
+                res.render('index.ejs', { user: {}, page: 'login.ejs' });
+              }
+        }
+    }
 
 }
 
@@ -150,10 +180,20 @@ var EMAIL = {
 
 
 router.get('/', (req, res) => {
-    console.log('default page.... get(/)');
-    API.events.list((result) => {
-        res.render('index.ejs', { title: 'Log Pelawat', data: result, page: 'list.ejs' });
-    });
+    try{
+        console.log('default page.... get(/)');
+        var session = req.cookies['eventLogID'];
+        console.log('my session :',session.user);
+        if(session.user.authorized){
+            API.events.list((result) => {
+                res.render('index.ejs', { title: 'Log Pelawat', data: result, page: 'list.ejs' });
+            });
+        }else{
+            res.render('index.ejs', { user: {}, page: 'login.ejs' });
+        }
+    }catch(err){
+        res.render('index.ejs', { user: {}, page: 'login.ejs' });
+    }
 });
 
 router.get('/list', (req, res) => {
@@ -241,6 +281,8 @@ router.post('/api/ev/update', actions.events.update);
 router.post('/api/ev/list', actions.events.list);
 router.post('/api/log/sign', actions.events.sign);
 router.post('/api/log/presign', EMAIL.sendQR);
+
+router.post('/api/user/login', actions.user.login);
 
 
 
