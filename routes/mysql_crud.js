@@ -161,6 +161,33 @@ let API = {
                 });
             }
         },
+        preregistered_list: (id, fn) => {
+            try{
+                var con = mysql.createConnection(auth.auth()[__DATA__SCHEMA__]);
+                var sql = `
+                SELECT b.title, b.venue,
+                eventid, ucase(nama) nama, email, notel, ucase(organisasi) organisasi, negeri, umur, jantina, pelawat, 
+                IFNULL(pengiring,'') pengiring, IFNULL(bilpelajar,0) bilpelajar, hadir,preregistrationid,
+                DATE_FORMAT(a.updatedate,'%d/%m/%Y') tarikh,
+                DATE_FORMAT(a.updatedate,'%H:%i') masa,
+                a.updatedate
+                FROM events_visitors a
+                left join events_register b using(eventid)
+                WHERE preregistrationid IS NOT NULL AND TRIM(nama)<>'' and a.eventid = ?
+                order by pelawat, organisasi;
+                `;
+
+                con.query(sql, [id],(err, result)=>{
+                    con.end();
+                    fn(result);
+                });
+            }catch(err){
+                fn({
+                    status: false,
+                    msg: err
+                });
+            }
+        },
 
         sign: (p, fn) => {
             console.log('xxxxxxx====>>>>',p);
@@ -263,6 +290,31 @@ let API = {
                 });
             }
         },
+
+        update_presign2: (id, bilhadir, fn) => {
+            
+            try{
+                var con = mysql.createConnection(auth.auth()[__DATA__SCHEMA__]);
+                var sql = `
+                update events_visitors set hadir = 1, bilpelajar = ? where preregistrationid = ?
+                `;
+
+                con.query(sql, [bilhadir, id],(err, result)=>{
+                    con.end();
+                    fn({
+                        status: true,
+                        msg: result
+                    });
+                });
+            }catch(err){
+                fn({
+                    status: false,
+                    msg: err
+                });
+            }
+        },
+
+
     }
 }
 

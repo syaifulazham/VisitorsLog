@@ -248,6 +248,20 @@ router.post('/scan', (req, res) => {
         });
 });
 
+router.post('/scan2', (req, res) => {
+    try{
+        console.log('@@@=============>>>>>',req.body);
+        var id = req.body.preregistrationid;
+        var bil = req.body.bilpelajar;
+
+        API.events.update_presign2(id, bil, result=>{
+            res.send(result);
+        })
+    }catch(err){
+        console.log(err);
+    }
+})
+
 router.get('/byid/:id', (req, res) => {
     const evid = req.params.id;
     console.log('Event ID: ', evid)
@@ -277,6 +291,14 @@ router.get('/log-prereg/:id', (req, res) => {
     const evid = req.params.id;
     API.events.log(evid, (result) => {
         res.render('log-prereg.ejs', { title: '(Pra-pendaftaran) Log Pelawat', data: result });
+    });
+});
+
+router.get('/log-prereg-list/:id', (req, res) => {
+    const evid = req.params.id;
+    API.events.preregistered_list(evid, (result) => {
+        console.log(result);
+        res.render('log-prereg-list.ejs', { title: '(Pra-pendaftaran) Log Pelawat', data: result });
     });
 });
 

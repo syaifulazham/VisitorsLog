@@ -13,6 +13,11 @@
     --gold: #a9b67a; /*a9b67a*/
 }
 
+#closeIdle:hover{
+    cursor: pointer;
+    background-color: #640000;
+}
+
 
 .anim-slide-in-top {
     -webkit-animation: slide-in-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
@@ -92,10 +97,18 @@
     display: flex;
     flex-direction: column;
     width: 400px;
-    height: 200px;
+    height: 400px;
     background-color: #1d2b3a;
     border: 2px solid #fff;
     border-radius: 8px;
+}
+
+.idlePopUp > .popUpPanel > .confirm{
+    padding: 20px;
+}
+.idlePopUp > .popUpPanel > .confirm strong{
+    word-wrap: normal;
+    max-width: 90%;
 }
 
 
@@ -205,6 +218,11 @@ body {
     text-align: center;
 }
 
+.text-grey{
+    color: #8b8b8b;
+    font-weight: 100;
+}
+
 .justify {
     justify-content: center;
     align-items: start;
@@ -306,7 +324,9 @@ body {
     background-color: var(--secondary-color);
 }
 
-
+.button-grp .button{
+    margin-right: 5px;
+}
 
 .button-green {
     display: inline-block;
@@ -347,6 +367,11 @@ body {
 
 .width-full{
     width: 100%;
+}
+
+.wh-30px{
+    width: 30px;
+    height: 30px;
 }
 
 .width-100px{
@@ -408,6 +433,14 @@ input:read-only{
     color: var(--text-light);
 }
 
+.bg-green{
+    background-color: rgb(132, 201, 132);
+}
+
+.bg-red{
+    background-color: red;
+}
+
 .hide {
     display: none;
     transition: all 1600ms ease-in-out;
@@ -419,4 +452,35 @@ input:read-only{
 
 .padding-10px{
     padding: 10px;
+}
+
+.small-italic{
+    color: #505050;
+    font-style: italic;
+    font-size: 80%;
+}
+
+.table{
+    background-color: #fff;
+    border-radius: 6px;
+    border: 1px solid #7e7e7e;
+    border-collapse: collapse;
+}
+
+.table thead{
+    background-color: #1d2b3a;
+    color: #fff;
+}
+
+.table th{
+    padding: 20px;
+}
+
+.table td{
+    padding: 0 15px 0 15px;
+}
+
+.table tr:hover{
+    background-color: #5a5a5a;
+    color: #fff;
 }
