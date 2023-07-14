@@ -189,9 +189,7 @@ var EMAIL = {
 
 router.get('/', (req, res) => {
     try{
-        console.log('default page.... get(/)');
         var session = req.cookies['eventLogID'];
-        console.log('my session :',session.user);
         if(session.user.authorized){
             API.events.list((result) => {
                 res.render('index.ejs', { title: 'Log Pelawat', data: result, page: 'list.ejs' });
@@ -205,13 +203,34 @@ router.get('/', (req, res) => {
 });
 
 router.get('/list', (req, res) => {
-    API.events.list((result) => {
-        res.render('index.ejs', { title: 'Log Pelawat', data: result, page: 'list.ejs' });
-    });
+    try{
+        var session = req.cookies['eventLogID'];
+        if(session.user.authorized){
+            API.events.list((result) => {
+                res.render('index.ejs', { title: 'Log Pelawat', data: result, page: 'list.ejs' });
+            });
+        }else{
+            res.render('index.ejs', { user: {}, page: 'login.ejs' });
+        }
+    }catch(err){
+        res.render('index.ejs', { user: {}, page: 'login.ejs' });
+    }
+
+    
 });
 
 router.get('/qrscan', (req, res) => {
-    res.render('index.ejs', { title: 'Log Kehadiran QR-Code', data: [], page: 'qrscan.ejs' });
+    try{
+        var session = req.cookies['eventLogID'];
+        if(session.user.authorized){
+            res.render('index.ejs', { title: 'Log Kehadiran QR-Code', data: [], page: 'qrscan.ejs' });
+        }else{
+            res.render('index.ejs', { user: {}, page: 'login.ejs' });
+        }
+    }catch(err){
+        res.render('index.ejs', { user: {}, page: 'login.ejs' });
+    }
+    
 });
 
 router.post('/scan', (req, res) => {
@@ -274,7 +293,13 @@ router.get('/byid/:id', (req, res) => {
 router.get('/register', (req, res) => {
     //console.log('register page.... get(/register)',res);
     try {
-        res.render('index.ejs', { title: 'Log Pelawat', page: 'register.ejs' });
+        var session = req.cookies['eventLogID'];
+        if(session.user.authorized){
+            res.render('index.ejs', { title: 'Log Pelawat', page: 'register.ejs' });
+        }else{
+            res.render('index.ejs', { user: {}, page: 'login.ejs' });
+        }
+        
     } catch (err) {
         console.log(err);
     }
