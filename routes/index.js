@@ -219,6 +219,28 @@ router.get('/list', (req, res) => {
     
 });
 
+router.get('/qrcode/:eventid', (req, res) => {
+    const rootUrl = `${req.protocol}://${req.get('host')}`;
+
+    // Combine the root URL and eventid parameter
+    const qrCodeData = `${rootUrl}/log/${req.params.eventid}`;
+  
+    // Generate the QR code image as a data URL
+    qrcode.toDataURL(qrCodeData, (err, dataUrl) => {
+      if (err) {
+        console.error('Error generating QR code:', err);
+        return res.sendStatus(500);
+      }
+  
+      // Render the EJS template and pass the data URL
+      API.events.log(req.params.eventid, dataEvent=>{
+        console.log(dataEvent);
+        res.render('qrcode', { dataUrl:dataUrl, data:dataEvent[0], url:qrCodeData });
+      })
+      
+    });
+});
+
 router.get('/qrscan', (req, res) => {
     try{
         var session = req.cookies['eventLogID'];

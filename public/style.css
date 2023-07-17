@@ -441,6 +441,14 @@ input:read-only{
     background-color: red;
 }
 
+.bg-yellow{
+    background-color: rgb(0, 0, 0);
+}
+
+.bg-blue{
+    background-color: blue;
+}
+
 .hide {
     display: none;
     transition: all 1600ms ease-in-out;
