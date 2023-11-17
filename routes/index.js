@@ -143,12 +143,12 @@ var EMAIL = {
                 html: `
                     <html>
                         <body>
-                            <span>Anda menerima email ini kerana anda telah berdaftar pra-pendaftaran untuk mengkadiri</span><br />
+                            <span>Anda menerima email ini kerana anda telah berdaftar pra-pendaftaran untuk menghadiri</span><br />
                             <strong>${borang.title}</strong><br/>
                             <span>Alamat: </span><strong>${borang.title}, ${borang.alamat}</strong><br/>
                             <span>Tarikh: </span><strong>${borang.tarikh}</strong><br/>
                             <br/><br/>
-                            <span>**Sila gunakan QR-CODE yang disertakan untuk pendaftaran dilokasi</span>
+                            <span>**Sila gunakan QR-CODE yang disertakan untuk pendaftaran di kaunter masuk</span>
 
                         </body>
                     </html>
@@ -293,11 +293,30 @@ router.post('/scan2', (req, res) => {
     try{
         console.log('@@@=============>>>>>',req.body);
         var id = req.body.preregistrationid;
-        var bil = req.body.bilpelajar;
+        var bil1 = req.body.bilpelajar;
+        var bil2 = req.body.bilguru;
 
-        API.events.update_presign2(id, bil, result=>{
+        API.events.update_presign2(id, bil1, bil2, result=>{
             res.send(result);
         })
+    }catch(err){
+        console.log(err);
+    }
+});
+
+
+
+router.post('/api/action/scan-hadir', (req, res) => {
+    try{
+        console.log('@@@=============>>>>>',req.body);
+        var id = req.body.preregistrationid;
+
+        API.events.update_presign(id, result=>{
+            API.events.preregistered(id, d=>{
+                res.send(d);
+            });
+            
+        });
     }catch(err){
         console.log(err);
     }

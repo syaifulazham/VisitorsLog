@@ -2,11 +2,9 @@
 <div class="flex-column widt-full center">
     <h1>Imbas QR-Code Anda untuk Kehadiran</h1>
     <div class="flex-row width-full center">
-      <div class="video-container matrix-container">
-        <div class="matrix-text">
-            <!-- Add your Matrix-like characters here -->
-            01
-            <!-- Repeat characters as needed -->
+      <div class="video-container">
+        <div class="result-container">
+           
           </div>
       </div>
     </div>
@@ -14,6 +12,27 @@
   </div>
   
   <script src="../assets/jquery/3.6.0/jquery-3.6.0.min.js"></script>
+  <script src="../assets/d3/v7/d3.v7.min.js"></script>
+
+  <script>
+    var api = {
+        loghadir: (id,fn)=>{
+            data = {
+              preregistrationid: id
+            }
+            console.log(data);
+            $.ajax({
+                type: "POST",
+                url: '/api/action/scan-hadir',
+                data: data,
+                success: function (res) {
+                    fn(res);
+                },
+                dataType: 'json'
+            });
+        }
+    }
+  </script>
 
   <script>
     $(document).ready(()=>{
@@ -23,6 +42,25 @@
 
         // Call the function every 2 seconds (2000 milliseconds)
         setInterval(keepInputFocused, 600);
+
+        $("#qrCode").on('change',()=>{
+          var str = $("#qrCode").val();
+          api.loghadir(str, d=>{
+            console.log('data===>>',d);
+            if(d){
+              var t = d3.select('.result-container');
+              t.append('div').attr('class','selamat').text('SELAMAT DATANG');
+              t.append('div').attr('class','scan-nama').text(d[0].nama.toUpperCase());
+              t.append('div').attr('class','scan-org').text(d[0].organisasi.toUpperCase());
+              t.append('div').attr('class','scan-pelawat').text("Pelawat: " + d[0].pelawat);
+              if(d[0].bilpelajar>0){
+                t.append('div').attr('class','scan-bil').text("Bilangan Pelajar: " + d[0].bilpelajar);
+              }
+            }
+          })
+          //$('.result-container').text(str);
+          $("#qrCode").val('');
+        })
     })
   </script>
   

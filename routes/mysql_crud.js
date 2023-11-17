@@ -167,7 +167,7 @@ let API = {
                 var sql = `
                 SELECT b.title, b.venue,
                 eventid, ucase(nama) nama, email, notel, ucase(organisasi) organisasi, negeri, umur, jantina, pelawat, 
-                IFNULL(pengiring,'') pengiring, IFNULL(bilpelajar,0) bilpelajar, hadir,preregistrationid,
+                IFNULL(pengiring,'') pengiring, IFNULL(bilpelajar,0) bilpelajar,IFNULL(bilguru,0) bilguru, hadir,preregistrationid,
                 DATE_FORMAT(a.updatedate,'%d/%m/%Y') tarikh,
                 DATE_FORMAT(a.updatedate,'%H:%i') masa,
                 a.updatedate
@@ -203,14 +203,15 @@ let API = {
                 p.pelawat,
                 p.pengiring,
                 p.bilpelajar,
+                p.bilguru,
                 p.hadir
             ];
 
             try{
                 var con = mysql.createConnection(auth.auth()[__DATA__SCHEMA__]);
                 var sql = `
-                insert into events_visitors(eventid,nama,email,notel,organisasi,negeri,umur,jantina,pelawat,pengiring,bilpelajar,hadir)
-                values(?,?,?,?,?,?,?,?,?,?,?,?)
+                insert into events_visitors(eventid,nama,email,notel,organisasi,negeri,umur,jantina,pelawat,pengiring,bilpelajar,bilguru,hadir)
+                values(?,?,?,?,?,?,?,?,?,?,?,?,?)
                 `;
 
                 con.query(sql, data,(err, result)=>{
@@ -242,6 +243,7 @@ let API = {
                 p.pelawat,
                 p.pengiring,
                 p.bilpelajar,
+                p.bilguru,
                 p.qrstring,
                 0
             ];
@@ -249,8 +251,8 @@ let API = {
             try{
                 var con = mysql.createConnection(auth.auth()[__DATA__SCHEMA__]);
                 var sql = `
-                insert into events_visitors(eventid,nama,email,notel,organisasi,negeri,umur,jantina,pelawat,pengiring,bilpelajar,preregistrationid,hadir)
-                values(?,?,?,?,?,?,?,?,?,?,?,?,?)
+                insert into events_visitors(eventid,nama,email,notel,organisasi,negeri,umur,jantina,pelawat,pengiring,bilpelajar,bilguru,preregistrationid,hadir)
+                values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)
                 `;
 
                 con.query(sql, data,(err, result)=>{
@@ -291,15 +293,15 @@ let API = {
             }
         },
 
-        update_presign2: (id, bilhadir, fn) => {
+        update_presign2: (id, bilpelajar, bilguru, fn) => {
             
             try{
                 var con = mysql.createConnection(auth.auth()[__DATA__SCHEMA__]);
                 var sql = `
-                update events_visitors set hadir = 1, bilpelajar = ? where preregistrationid = ?
+                update events_visitors set hadir = 1, bilpelajar = ?, bilguru = ? where preregistrationid = ?
                 `;
 
-                con.query(sql, [bilhadir, id],(err, result)=>{
+                con.query(sql, [bilpelajar, bilguru, id],(err, result)=>{
                     con.end();
                     fn({
                         status: true,

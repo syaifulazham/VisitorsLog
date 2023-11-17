@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Monofett&family=Nova+Mono&family=Poppins&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Lobster&family=Poppins:wght@200&family=Tektur&display=swap');
 
 :root{
     --primary:#ea7816;
@@ -78,9 +79,7 @@
 }
 
 .matrix-container {
-    position: absolute;
-    top: 0;
-    left: 0;
+    background-color: #000;
     width: 100%;
     height: 100vh;
     display: flex;
@@ -136,6 +135,30 @@
 .idlePopUp > .popUpPanel > .confirm strong{
     word-wrap: normal;
     max-width: 90%;
+}
+
+.selamat{
+    font-family: 'Agbalumo', sans-serif;
+    font-size: 350%;
+    font-weight: bolder;
+    text-align: center;
+    padding-bottom: 30px;
+}
+
+
+.scan-nama, .scan-org, .scan-pelawat, .scan-bil{
+    font-family: 'Poppin', sans-serif;
+    text-align: center;
+}
+
+.scan-nama, .scan-org{
+    font-size: 250%;
+    font-weight: bolder;
+}
+
+.scan-pelawat, .scan-bil{
+    font-size: 250%;
+    font-weight: normal;
 }
 
 

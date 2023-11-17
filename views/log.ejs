@@ -122,6 +122,11 @@
             <div class="flex-row width-full center">
               <input type="number" id="txtbilpelajar" placeholder="bilangan pelajar" value="0">
             </div>
+
+            <h4>Bilangan Guru</h4>
+            <div class="flex-row width-full center">
+              <input type="number" id="txtbilguru" placeholder="bilangan guru" value="0">
+            </div>
           </div>
         </div>
         
@@ -185,6 +190,19 @@
           </div>
         </div>
 
+        
+    <div class="idlePopUp center hide">
+      <div class="popUpPanel center">
+          <span class="spinner">
+              <i class="fa-solid fa-spinner fa-spin-pulse fa-3x"></i>
+          </span>
+          
+          <span id="msg" class="msg-saved text-center hide"></span>
+          <br>
+          <div class="msg-saved button hide" id="closePopup">Selesai</div>
+      </div>
+  </div>
+
         <script src="../assets/jquery/3.6.0/jquery-3.6.0.min.js"></script>
         <script src="../assets/fontawesome/js/d0267849d0.js" crossorigin="anonymous"></script>
         <script>
@@ -200,11 +218,22 @@
                   },
                   dataType: 'json'
                 });
+
+                setTimeout(()=>{
+                    $('.spinner').addClass('hide');
+                    $('.msg-saved').removeClass('hide');
+                    $('#msg').html("<span>Terimakasih dan Selamat Datang</span><br ><span>Anda boleh tutup borang ini</span>" )
+                }, 3000);
+
               }
             }
           }
         </script>
         <script>
+
+        $('#closePopup').on('click',()=>{
+          window.close();
+        });
 
           $('input[name="pelawat"]').on('click',()=>{
             if($('input[name="pelawat"]:checked').val()==='Guru Pengiring'){
@@ -230,10 +259,13 @@
               pelawat: $('input[name="pelawat"]:checked').val(),
               pengiring: $('input[name="kump-pelajar"]:checked').val(),
               bilpelajar: $('#txtbilpelajar').val(),
+              bilguru: $('#txtbilguru').val(),
               hadir: 1
             }
 
             console.log(data);
+
+            $('.idlePopUp').removeClass('hide');
 
             API.submit.registration(data, (d) => {
               console.log(data);

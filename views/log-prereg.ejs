@@ -123,6 +123,11 @@
             <div class="flex-row width-full center">
               <input type="number" id="txtbilpelajar" placeholder="bilangan pelajar" value="0">
             </div>
+
+            <h4>Bilangan Guru</h4>
+            <div class="flex-row width-full center">
+              <input type="number" id="txtbilguru" placeholder="bilangan guru" value="0">
+            </div>
           </div>
         </div>
         
@@ -266,6 +271,7 @@
               pelawat: $('input[name="pelawat"]:checked').val(),
               pengiring: $('input[name="kump-pelajar"]:checked').val(),
               bilpelajar: $('#txtbilpelajar').val(),
+              bilguru: $('#txtbilguru').val(),
               hadir: 1,
               title: "<%=data[0].title%>",
               venue: "<%=data[0].venue%>",

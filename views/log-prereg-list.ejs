@@ -21,7 +21,8 @@
                     <th>Sekolah/ Organisasi</th>
                     <th>Kategori</th>
                     <th>Pengiring</th>
-                    <th>Jumlah</th>
+                    <th>Jum. Pelajar</th>
+                    <th>Jum. Guru</th>
                     <th></th>
                 </tr>
             </thead>
@@ -32,10 +33,11 @@
                         <td><%=d.organisasi%></td>
                         <td class="<%=d.pelawat=='Guru Pengiring'?'capsule bg-green':''%>"><%=d.pelawat%></td>
                         <td><%=d.pengiring%></td>
-                        <td class="<%=d.bilpelajar==0?'small-italic':''%>"><%=d.pelawat=='Guru Pengiring' && d.bilpelajar==0?'Jumlah pelajar tidak dinyatakan':d.bilpelajar%></td>
+                        <td style="text-align: center;" class="<%=d.bilpelajar==0?'small-italic':''%>"><%=d.pelawat=='Guru Pengiring' && d.bilpelajar==0?'Jumlah pelajar tidak dinyatakan':d.bilpelajar%></td>
+                        <td style="text-align: center;" class="<%=d.bilguru==0?'small-italic':''%>"><%=d.pelawat=='Guru Pengiring' && d.bilguru==0?'Jumlah guru tidak dinyatakan':d.bilguru%></td>
                         <td>
                             <%if(d.hadir==0){%>
-                                <button id="_<%=d.preregistrationid%>" preregistrationid="<%=d.preregistrationid%>" class="button" eventid="<%=d.eventid%>" nama="<%=d.nama%>" organisasi="<%=d.organisasi%>" pelawat="<%=d.pelawat%>" bilpelajar="<%=d.bilpelajar%>" onclick="hadirClicked(event)">Hadir</button>
+                                <button id="_<%=d.preregistrationid%>" preregistrationid="<%=d.preregistrationid%>" class="button" eventid="<%=d.eventid%>" nama="<%=d.nama%>" organisasi="<%=d.organisasi%>" pelawat="<%=d.pelawat%>" bilpelajar="<%=d.bilpelajar%>" bilguru="<%=d.bilguru%>"  onclick="hadirClicked(event)">Hadir</button>
                             <%}else{%>
                                 <span><%=d.updatedate%></span>
                             <%}%>
@@ -61,7 +63,10 @@
                 <span class="flex-column"><span class="text-grey">Sekolah/ Organisasi: </span><strong id="organisasi"></strong></span>
                 <span class="flex-column"><span class="text-grey">Kategori: </span><strong id="pelawat"></strong></span>
                 
-                <span id="isPengiring" class="flex-column"><span class="text-grey">Bilangan Pelajar: </span><input type="number" id="bilpelajar"></span>
+                <span id="isPengiring" class="flex-column">
+                    <span class="text-grey">Bilangan Pelajar: </span><input type="number" id="bilpelajar">
+                    <span class="text-grey">Bilangan Guru: </span><input type="number" id="bilguru">
+                </span>
                 
             </div>
             <br>
@@ -88,6 +93,7 @@
                 var organisasi = $('#' + e.target.id).attr('organisasi');
                 var pelawat = $('#' + e.target.id).attr('pelawat');
                 var bilpelajar = $('#' + e.target.id).attr('bilpelajar');
+                var bilguru = $('#' + e.target.id).attr('bilguru');
 
                 if(pelawat=='Guru Pengiring'){
                     $('#isPengiring').removeClass('hide');
@@ -99,6 +105,7 @@
                 $('#organisasi').text(organisasi);
                 $('#pelawat').text(pelawat);
                 $('#bilpelajar').val(bilpelajar);
+                $('#bilguru').val(bilguru);
 
                 $('.idlePopUp').removeClass('hide');
                 console.log(eid);
@@ -111,7 +118,8 @@
               registration: (fn) => {
                 data = {
                     preregistrationid: $('#preregistration').attr('val'),
-                    bilpelajar: $('#bilpelajar').val()
+                    bilpelajar: $('#bilpelajar').val(),
+                    bilguru: $('#bilguru').val()
                 }
                 $.ajax({
                   type: "POST",
@@ -120,6 +128,7 @@
                   success: function(res) {
                     $('.idlePopUp').toggleClass('hide');
                     $('#bilpelajar').val(0);
+                    $('#bilguru').val(0);
                     fn(res);
                   },
                   dataType: 'json'
