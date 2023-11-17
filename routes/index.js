@@ -245,7 +245,7 @@ router.get('/qrscan', (req, res) => {
     try{
         var session = req.cookies['eventLogID'];
         if(session.user.authorized){
-            res.render('index.ejs', { title: 'Log Kehadiran QR-Code', data: [], page: 'qrscan.ejs' });
+            res.render('index.ejs', { title: 'Log Kehadiran QR-Code', data: [], page: 'qrscan-kehadiran.ejs' });
         }else{
             res.render('index.ejs', { user: {}, page: 'login.ejs' });
         }

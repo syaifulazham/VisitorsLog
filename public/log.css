@@ -86,6 +86,11 @@
   }
 }
 
+h1,h3,h5{
+  padding: 0;
+  text-align: center;
+}
+
 .qrcode{
   width: 60vh;
   height: 60vh;
@@ -211,6 +216,8 @@
 .hide{
   display: none;
 }
+
+
 
 @media (max-width: 767px) {
   input[type="text"]{

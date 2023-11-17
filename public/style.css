@@ -77,6 +77,33 @@
   animation-delay: 1.5s;
 }
 
+.matrix-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    color: #0F0; /* Matrix green color */
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .matrix-text {
+    white-space: nowrap;
+    overflow: hidden;
+    animation: matrixAnimation 10s linear infinite;
+  }
+
+  @keyframes matrixAnimation {
+    to {
+      transform: translateY(-100%);
+    }
+  }
+
 
 .idlePopUp{
     display: flex;
@@ -125,6 +152,15 @@ body {
 }
 
 
+#qrCode{
+    border: 0 solid #fff;
+    width: 5px;
+    opacity: 0;
+  }
+  #qrCode:focus{
+    border: 0 solid #fff;
+  }
+  
 
 #video-container > video{
     border: 2px solid #474747;

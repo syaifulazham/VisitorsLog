@@ -1,0 +1,28 @@
+<input id="qrCode" type="text">
+<div class="flex-column widt-full center">
+    <h1>Imbas QR-Code Anda untuk Kehadiran</h1>
+    <div class="flex-row width-full center">
+      <div class="video-container matrix-container">
+        <div class="matrix-text">
+            <!-- Add your Matrix-like characters here -->
+            01
+            <!-- Repeat characters as needed -->
+          </div>
+      </div>
+    </div>
+    <div id="scan-results"></div>
+  </div>
+  
+  <script src="../assets/jquery/3.6.0/jquery-3.6.0.min.js"></script>
+
+  <script>
+    $(document).ready(()=>{
+        function keepInputFocused() {
+            $("#qrCode").focus();
+        }
+
+        // Call the function every 2 seconds (2000 milliseconds)
+        setInterval(keepInputFocused, 600);
+    })
+  </script>
+  

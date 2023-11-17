@@ -70,6 +70,10 @@
         <div id="radios2" class="text-center radio-questions-grp ">
           <h4>Anda adalah...</h4>
 
+          <label for="media">
+            <input type="radio" name="pelawat" id="media" value="Media" />
+            <span>Media</span>
+          </label>
           <label for="pengiring">
             <input type="radio" name="pelawat" id="pengiring" value="Guru Pengiring" />
             <span>Guru Pengiring</span>
@@ -124,8 +128,9 @@
         
       </div>
 
+     
       <div class="radio-questions width-full flex-row center">
-
+ <!--
         <div id="radios0" class="radio-questions-grp text-center">
           <h4>Apa Kumpulan Umur anda?</h4>
           <label for="age1">
@@ -168,7 +173,7 @@
           </label>
           
         </div>
-
+-->
 
 
 
@@ -245,6 +250,10 @@
             var url = window.location.href;
             var eid_ = url.split('/');
             var eid = eid_[eid_.length-1];
+            /*
+            umur: $('input[name="age"]:checked').val(),
+              jantina: $('input[name="jantina"]:checked').val(),
+            */
             data = {
               eventid: eid,
               nama: $('#txtnama').val(),
@@ -252,8 +261,8 @@
               notel: $('#txtnotel').val(),
               organisasi: $('#txtorganisasi').val(),
               negeri: $('input[name="negeri"]:checked').val(),
-              umur: $('input[name="age"]:checked').val(),
-              jantina: $('input[name="jantina"]:checked').val(),
+              umur: '',
+              jantina: '',
               pelawat: $('input[name="pelawat"]:checked').val(),
               pengiring: $('input[name="kump-pelajar"]:checked').val(),
               bilpelajar: $('#txtbilpelajar').val(),
